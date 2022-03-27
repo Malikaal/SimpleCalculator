@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var fnumb=0
-    @State var snumb=0
-    @State var result=0
+    @State private var fnumb:Float=0; 
+    @State private var snumb:Float=0
+    @State private var result:Float=0
     @State private var selection = 1
         
     
@@ -21,56 +21,58 @@ struct ContentView: View {
     }()
     
     var body: some View {
-        
-        TextField("fnumb", value: $fnumb, formatter: formatter) .keyboardType(.numberPad) .padding()
-        
-        
         VStack {
+            TextField("fnumb", value: $fnumb, formatter: formatter) .keyboardType(.numberPad)
+                .font(.system(size: 50))
+                .padding()
+            
             Picker(selection: $selection, label: Text("")) {
                 Text("x").tag(1)
                 Text("÷").tag(2)
                 Text("+").tag(3)
                 Text("-").tag(4)
             }
-        }
-        
-        TextField("snumb", value: $snumb, formatter: formatter) .keyboardType(.numberPad) .padding()
-        
-        
-        Button(action: {
-            if selection == 1 {
-                print(fnumb * snumb)
-                result = (fnumb * snumb)
-                TextField("result", value: $result , formatter: formatter)
-            } else if selection == 2{
-                print(fnumb / snumb)
-                result = (fnumb / snumb)
-                TextField("result", value: $result , formatter: formatter)
-            } else if selection == 3{
-                print(fnumb + snumb)
-                result = fnumb + snumb
-                TextField("result", value: $result , formatter: formatter)
-            } else if selection == 4{
-                print(fnumb - snumb)
-                result = fnumb - snumb
-                TextField("result", value: $result , formatter: formatter)
+            .pickerStyle(.segmented)
+            .padding()
+            
+            TextField("snumb", value: $snumb, formatter: formatter) .keyboardType(.numberPad)
+                .font(.system(size: 50))
+                .padding()
+            
+            Button(action: {
+                if selection == 1 {
+                    print(fnumb * snumb)
+                    result = (fnumb * snumb)
+                } else if selection == 2{
+                    print(fnumb / snumb)
+                    result = (fnumb / snumb)
+                } else if selection == 3{
+                    print(fnumb + snumb)
+                    result = fnumb + snumb
+                } else if selection == 4{
+                    print(fnumb - snumb)
+                    result = fnumb - snumb
+                }
+                return
+            }) {
+                HStack {
+    //                        Image(systemName: "")
+    //                            .font(.title)
+                    Text("=")
+                        .fontWeight(.semibold)
+                        .font(.title)
+                }
+                .padding()
+                .foregroundColor(.white)
+                .background(Color.orange)
+                .cornerRadius(40)
             }
             
-        }) {
-            HStack {
-//                        Image(systemName: "")
-//                            .font(.title)
-                Text("=")
-                    .fontWeight(.semibold)
-                    .font(.title)
-            }
-            .padding()
-            .foregroundColor(.white)
-            .background(Color.orange)
-            .cornerRadius(40)
+            TextField("result", value: $result , formatter: formatter) .keyboardType(.numberPad)
+                .font(.system(size: 50))
+                .padding()
         }
         
-        TextField("result", value: $result , formatter: formatter) .keyboardType(.numberPad) .padding()
     }
     
 }
